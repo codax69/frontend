@@ -7,7 +7,8 @@ export default defineConfig({
   server:{
     proxy:{
       "/api":{
-         target:"https://server-1-aopt.onrender.com"
+         target:"https://server-1-aopt.onrender.com",
+         changeOrigin:true
       }
     }
   }
