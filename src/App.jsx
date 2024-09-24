@@ -1,23 +1,34 @@
-import  { useState, useEffect } from 'react';
-import axios from 'axios';
-import "./App.css"
+import { useState, useEffect } from "react";
+import axios from "axios";
+import "./App.css";
 
 const App = () => {
   const [userData, setUserData] = useState(null);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('/api/v1/res');
-      setUserData(response.data.data);
+      const response = await axios.get("/api/v1/res");
+      if (response.status === 200) {
+        setUserData(response.data.data.avatar_url);
+      } else {
+        console.error(`Unexpected response status: ${response.status}`);
+      }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      if (error.response) {
+        console.error(
+          `Error: ${error.response.status} - ${error.response.data}`
+        );
+      } else if (error.request) {
+        console.error("Error: No response received", error.request);
+      } else {
+        console.error("Error:", error.message);
+      }
     }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
- console.log(userData)
   return (
     <>
       <div className="px-8 pt-5">
@@ -39,23 +50,11 @@ const App = () => {
             </div>
             <div className="relative">
               <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-24 w-24 fill-orange-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <img src={userData.avatar_url} alt="" />
               </div>
             </div>
             <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-              <button className="text-white py-2 px-4 rounded bg-orange-400 hover:bg-orange-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-              </button>
+              <button className="text-white py-2 px-4 rounded bg-orange-400 hover:bg-orange-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"></button>
               <button className="text-white py-2 px-4 capitalize rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
                 Check Attendance
               </button>
@@ -66,9 +65,13 @@ const App = () => {
               <>
                 <h1 className="text-4xl font-medium text-gray-700">
                   {userData.name},
-                  <span className="font-light text-gray-500">{userData.id}</span>
+                  <span className="font-light text-gray-500">
+                    {userData.id}
+                  </span>
                 </h1>
-                <p className="font-light text-gray-600 mt-3">{userData.login}</p>
+                <p className="font-light text-gray-600 mt-3">
+                  {userData.login}
+                </p>
                 <p className="mt-8 text-gray-500">{userData.followers}</p>
                 <p className="mt-2 text-gray-500">I.C.Desai ITI-Pardi</p>
               </>
