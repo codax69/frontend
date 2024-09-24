@@ -6,24 +6,10 @@ const App = () => {
   const [userData, setUserData] = useState(null);
 
   const fetchData = async () => {
-    try {
-      const response = await axios.get("/api/v1/res");
-      if (response.status === 200) {
-        setUserData(response.data.data.avatar_url);
-      } else {
-        console.error(`Unexpected response status: ${response.status}`);
-      }
-    } catch (error) {
-      if (error.response) {
-        console.error(
-          `Error: ${error.response.status} - ${error.response.data}`
-        );
-      } else if (error.request) {
-        console.error("Error: No response received", error.request);
-      } else {
-        console.error("Error:", error.message);
-      }
-    }
+    axios
+      .get("/api/v1/res")
+      .then((res) => setUserData(res.data.data))
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
@@ -50,7 +36,6 @@ const App = () => {
             </div>
             <div className="relative">
               <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-                {/* <img src={userData.avatar_url} alt="" /> */}
               </div>
             </div>
             <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
