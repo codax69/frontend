@@ -9,7 +9,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'https://server-1-aopt.onrender.com/',
-        secure: false, 
+        changeOrigin:true,
         agent: new https.Agent({
           rejectUnauthorized: false
         })
