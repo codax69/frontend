@@ -50,7 +50,7 @@ const App = () => {
             </div>
             <div className="relative">
               <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-                <img src={userData.avatar_url} alt="" />
+                {/* <img src={userData.avatar_url} alt="" /> */}
               </div>
             </div>
             <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
