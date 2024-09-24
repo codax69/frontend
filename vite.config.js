@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import https from 'https';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,10 +8,8 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'https://server-1-aopt.onrender.com/',
-        changeOrigin:true,
-        agent: new https.Agent({
-          rejectUnauthorized: false
-        })
+        changeOrigin: true,
+        secure: true 
       }
     }
   }
