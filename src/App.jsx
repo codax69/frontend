@@ -7,7 +7,7 @@ const App = () => {
 
   const fetchData = async () => {
     axios
-      .get("/api/v1/res") 
+      .get("/api/api/v1/res") 
       .then((res) => setUserData(res.data.data))
       .catch((error) => console.log(error));
   };
